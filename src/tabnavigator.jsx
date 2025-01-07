@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   View,
   Text,
@@ -20,17 +20,21 @@ import {
 import { GlobalContext } from "./constatnts/context";
 import { darkTheme } from "./theme";
 
-
 const Tab = createBottomTabNavigator();
-function useReducer(state, action) {
+function reducer(state, action) {
   switch (action.type) {
     case SET_REPO_IN_FAVORITE: {
       return {
         ...state,
-        favoritRepos: [...state.favoritRepos,{... action.data  ,  isfavorite: true}],
-        allRepos: state.allRepos.map((item) =>{
-          return item.node_id === action.data.node_id ? { ...item, isfavorite: true } : item}
-        ),
+        favoritRepos: [
+          ...state.favoritRepos,
+          { ...action.data, isfavorite: true },
+        ],
+        allRepos: state.allRepos.map((item) => {
+          return item.node_id === action.data.node_id
+            ? { ...item, isfavorite: true }
+            : item;
+        }),
       };
     }
     case SET_REPO_LISTS: {
@@ -50,10 +54,11 @@ function useReducer(state, action) {
         ),
       };
     }
-    case SET_THEME:{
+    case SET_THEME: {
       return {
-        ...state,isDarkMode:action.data
-      }
+        ...state,
+        isDarkMode: action.data,
+      };
     }
     default: {
       return state;
@@ -61,15 +66,15 @@ function useReducer(state, action) {
   }
 }
 export default function TabNavigator() {
-  const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const inidata = {
     favoritRepos: [],
     allRepos: [],
-    isDarkMode:false
+    isDarkMode: false,
   };
-  const [state, stateDispatch] = React.useReducer(useReducer ,inidata);
-  const {isDarkMode} = state
-  React.useEffect(() => {
+  const [state, stateDispatch] = useReducer(reducer, inidata);
+  const { isDarkMode } = state;
+  useEffect(() => {
     const showListener = Keyboard.addListener("keyboardDidShow", () =>
       setKeyboardVisible(true)
     );
@@ -109,7 +114,9 @@ export default function TabNavigator() {
               tabBarInactiveTintColor: "#808080",
               tabBarStyle: {
                 position: "absolute",
-                backgroundColor:isDarkMode?darkTheme.backgroundColor:"#fff",
+                backgroundColor: isDarkMode
+                  ? darkTheme.backgroundColor
+                  : "#fff",
                 bottom: keyboardVisible ? 0 : 0,
                 transform: [
                   {

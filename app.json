@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "exploreRepo",
-    "slug": "exploreRepo",
+    "name": "GitExplorer",
+    "slug": "GitExplorer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,21 +14,21 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sachinkesarwani.exploreRepo"
+      "bundleIdentifier": "com.sachinkesarwani.GitExplorer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.sachinkesarwani.exploreRepo"
+      "package": "com.sachinkesarwani.GitExplorer"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "ad7fc616-b42a-4465-b925-d8fc6fc206ac"
+        "projectId": "0e1a6798-805e-4eec-9667-c93fa7c068ee"
       }
     }
   }
