@@ -1,6 +1,5 @@
 import {
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,7 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../shared/customInput";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
-import RepoOverviewCard from "../shared/repoOverviewCard";
 import RepoCardList from "../shared/repoCardList";
 import { GlobalContext } from "../constatnts/context";
 import { SET_REPO_LISTS, SET_THEME } from "../constatnts/actionType";
@@ -17,7 +15,6 @@ import { View } from "react-native";
 import CustomStatusBar from "../shared/customStatusBar";
 import Icon from "../shared/icon";
 import { darkTheme, lightTheme, themestyles } from "../theme";
-import RepoOverviewSkeleton from "../shared/skeletons/repoOverViewSkeleton";
 
 function HomeScreen(props) {
   const { navigation } = props;
@@ -30,13 +27,6 @@ function HomeScreen(props) {
   const { state, stateDispatch } = useContext(GlobalContext);
   const { allRepos = [], isDarkMode = false } = state;
   const theme = themestyles(isDarkMode);
-  useEffect(() => {
-    if (text.length > 0) {
-      debounce(text);
-    } else {
-      stateDispatch({ type: SET_REPO_LISTS, data: [] });
-    }
-  }, [text]);
 
   const getRepositories = useCallback(async (searchText) => {
     try {
@@ -58,6 +48,13 @@ function HomeScreen(props) {
     }
   }, []);
   const debounce = useDebounce(getRepositories, 500);
+  useEffect(() => {
+    if (text.length > 0) {
+      debounce(text);
+    } else {
+      stateDispatch({ type: SET_REPO_LISTS, data: [] });
+    }
+  }, [text]);
 
   async function onLoadmorefun() {
     try {
@@ -117,7 +114,7 @@ function HomeScreen(props) {
             navigation={navigation}
             isError={isError}
             onRefreshfunction={onRefreshfunction}
-            refreshing={false}
+            refreshing={refreshing}
             shouldRefresh={true}
           />
         ) : (

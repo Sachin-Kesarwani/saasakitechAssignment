@@ -10,8 +10,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomStatusBar from "./customStatusBar";
-import AddToFavorite from "./addToFavorite";
-import Icon from "./icon";
 import { GlobalContext } from "../constatnts/context";
 import { darkTheme, lightTheme, themestyles } from "../theme";
 
@@ -33,18 +31,22 @@ const RepoDetailPage = (props) => {
     updated_at = "",
     homepage = "",
   } = repo;
-  const { state,  } = useContext(GlobalContext);
-  const {  isDarkMode=false} = state;
+  const { state } = useContext(GlobalContext);
+  const { isDarkMode = false } = state;
   const theme = themestyles(isDarkMode);
-  const bg =  {backgroundColor:isDarkMode?"#645573":"#9142db"}
+  const bg = { backgroundColor: isDarkMode ? "#645573" : "#9142db" };
   const handleVisitRepo = () => {
     Linking.openURL(html_url);
   };
 
   return (
     <SafeAreaView>
-      <CustomStatusBar backgroundColor={isDarkMode?darkTheme.backgroundColor:lightTheme.backgroundColor}/>
-      <View style={[styles.container , theme.container , theme.text]}>
+      <CustomStatusBar
+        backgroundColor={
+          isDarkMode ? darkTheme.backgroundColor : lightTheme.backgroundColor
+        }
+      />
+      <View style={[styles.container, theme.container, theme.text]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Image source={{ uri: owner.avatar_url }} style={styles.avatar} />
@@ -71,12 +73,18 @@ const RepoDetailPage = (props) => {
             </Text>{" "}
             {language || "NA"}
           </Text>
-          <Text style={styles.topics}>
-            <Text style={[styles.language, { fontWeight: "800" }]}>
-              Topics:
-            </Text>{" "}
-            {topics?.join(", ") || "NA"}
-          </Text>
+        { topics?.length>0? <View>
+            <Text style={styles.topics}>
+              <Text style={[styles.language, { fontWeight: "800" }]}>
+                Topics:
+              </Text>{" "}
+            </Text>
+            <View style={styles.pillContainer}>
+              {topics?.map((item) => {
+                return <Text style={styles.pillText}>{item}</Text>;
+              })}
+            </View>
+          </View>:null}
           <Text style={styles.license}>
             <Text style={[styles.language, { fontWeight: "800" }]}>
               License:
@@ -94,14 +102,14 @@ const RepoDetailPage = (props) => {
             {homepage && (
               <TouchableOpacity
                 onPress={() => Linking.openURL(homepage)}
-                style={[styles.linkButton , bg , {marginBottom:0}]}
+                style={[styles.linkButton, bg, { marginBottom: 0 }]}
               >
                 <Text style={styles.linkText}>Visit Website</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               onPress={handleVisitRepo}
-              style={[styles.linkButton , bg]}
+              style={[styles.linkButton, bg]}
             >
               <Text style={styles.linkText}>Visit Repository</Text>
             </TouchableOpacity>
@@ -180,7 +188,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   footer: {
-    marginTop: 20,
+    marginTop: 10,
   },
   footerText: {
     fontSize: 14,
@@ -191,12 +199,28 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
-    marginBottom:30,
+    marginBottom: 30,
     alignItems: "center",
   },
   linkText: {
     color: "#fff",
     fontSize: 16,
+  },
+  pillContainer: {
+    flexDirection: "row", 
+    flexWrap: "wrap",
+  },
+  pillText: {
+    color: "#e79fed",
+    backgroundColor: "#f0e0f7",
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginRight: 6,
+    marginTop: 6,
   },
 });
 
