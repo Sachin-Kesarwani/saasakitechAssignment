@@ -29,7 +29,7 @@ const RepoOverviewCard = ({ repository  , navigation}) => {
         </View>
       <AddToFavorite repository={repository} />
       </View>
-      <Text style={styles.repoName}>{repository.full_name}</Text>
+      <Text numberOfLines={2} style={styles.repoName}>{repository.full_name}</Text>
      { repository.description &&<Text numberOfLines={3} style={styles.description}>{repository.description}</Text>}
       <View style={styles.statsContainer}>
         <View style={styles.stat}>

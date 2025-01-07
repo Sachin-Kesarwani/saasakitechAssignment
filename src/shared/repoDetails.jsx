@@ -94,7 +94,7 @@ const RepoDetailPage = (props) => {
             {homepage && (
               <TouchableOpacity
                 onPress={() => Linking.openURL(homepage)}
-                style={[styles.linkButton , bg]}
+                style={[styles.linkButton , bg , {marginBottom:0}]}
               >
                 <Text style={styles.linkText}>Visit Website</Text>
               </TouchableOpacity>
@@ -114,7 +114,6 @@ const RepoDetailPage = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: "white",
     padding: 15,
     height: "100%",
@@ -143,7 +142,6 @@ const styles = StyleSheet.create({
   repoName: {
     fontSize: 24,
     fontWeight: "bold",
-    // maxWidth:'90%',
   },
   repoDescription: {
     fontSize: 16,
@@ -193,6 +191,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
+    marginBottom:30,
     alignItems: "center",
   },
   linkText: {
